@@ -1,0 +1,21 @@
+<meta name="referrer" content="never">
+
+
+if (never) {
+        var meta = document.createElement('meta');
+        meta.name = 'referrer';
+        meta.content = 'never';
+        document.getElementsByTagName('head')[0].appendChild(meta);
+    }
+	
+接口：
+
+cid 确定 p几
+高清接口
+
+https://api.bilibili.com/x/player/playurl?avid=38735633&cid=68089009&qn=80&type=&fnver=0&fnval=16&otype=json
+	
+https://api.bilibili.com/playurl?aid=37637833&page=1&platform=html5&quality=1&vtype=mp4&type=jsonp&token=undefined&is_preview=0&callback=jQuery1544201420531
+
+名字接口
+https://api.bilibili.com/x/web-interface/view?callback=cb_view&jsonp=jsonp&aid=55595427

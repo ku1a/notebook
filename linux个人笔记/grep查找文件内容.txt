@@ -1,0 +1,4 @@
+grep -e system *.php
+
+查找含有内容system 后缀为.php的文件
+

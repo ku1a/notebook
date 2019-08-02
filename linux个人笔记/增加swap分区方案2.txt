@@ -1,0 +1,49 @@
+1.添加swap分区
+使用dd命令创建名为swapfile 的swap交换文件（文件名和目录任意）:
+ dd  if=/dev/zero  of=/var/swapfile  bs=1024  count=2097152
+ 或
+
+ dd  if=/dev/zero  of=/var/swapfile  bs=1024  count=2048k  
+       科普：if(即输入文件,input file)，of(即输出文件,output file)。dev/zero是Linux的一种特殊字符设备(输入设备)，可以用来创建一个指定长度用于初始化的空文件，如临时交换文件，该设备无穷尽地提供0，可以提供任何你需要的数目。 bs=1024  ：单位数据块（block）同时读入/输出的块字节大小为1024  个字节即1KB，bs(即block size)。count=2048000  ：数据块（block）数量为2048000 ，即2048000个1KB。可以计算swap分区的容量为：1KB *2097152=1KB *1024(k)*1024*2=2097152=2G。（dd命令里的单位M表示1024*1024,k表示1024）。
+
+        回车后，会执行2g的读写操作，系统会卡一段时间，耐心等待执行结果。
+
+执行完毕，对交换文件格式化并转换为swap分区：
+
+mkswap  /var/swapfile
+挂载并激活分区：
+swapon   /var/swapfile
+执行以上命令可能会出现：“不安全的权限 0644，建议使用 0600”类似提示，不要紧张，实际上已经激活了，可以忽略提示，也可以听从系统的建议修改下权限：
+chmod -R 0600 /var/swapfile
+这时候可以用 free -h 或 swapon -s命令查看新swap分区是否正常添加并激活使用。
+
+修改 fstab 配置，设置开机自动挂载该分区：
+ vim    /etc/fstab
+在fstab文件末尾追加如下内容后:wq!保存即可：
+/var/swapfile   swap  swap  defaults  0  0
+或直接对fstab进行echo追加:
+echo  "/var/swapfile   swap  swap  defaults  0  0" >>  /etc/fstab
+2.删除某swap分区
+
+先停止正在使用swap分区：
+swapoff  /var/swapfile
+删除swap分区文件
+rm -rf   /var/swapfile
+删除或注释掉我们之前在fstab文件里追加的开机自动挂载配置内容：
+/var/swapfile   swap  swap  defaults  0  0
+
+3.更改Swap配置（进阶级）
+        swappiness值（0-100），系统对swap分区的依赖程度，越高则越倾向于使用swap分区。
+        当然，高度依赖swap会造成物理内存远未使用完，就使用swap分区，我们知道swap分区性能远不如物理内存，这反而降低了系统性能，违背了我们创建swap分区的初衷。
+         我们希望在物理内存即将满荷时再使用swap，这就决定了swappiness值一般为10-60为宜，固态硬盘可以偏高些。
+查看当前的swappiness数值：
+cat   /proc/sys/vm/swappiness 
+修改swappiness值，这里以50为例。
+sysctl vm.swappiness=50 
+若希望vm.swappiness=50永久生效，则需要修改sysctl配置文件，直接echo追加配置内容，重启系统后即可生效：
+echo "vm.swappiness = 50"  >>  /etc/sysctl.conf
+--------------------- 
+作者：皓煙 
+来源：CSDN 
+原文：https://blog.csdn.net/ausboyue/article/details/73433990 
+版权声明：本文为博主原创文章，转载请附上博文链接！

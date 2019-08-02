@@ -1,0 +1,96 @@
+linux中Centos7增加swap分区详解
+
+注意：（Redhat5官方推荐）
+
+RAM<=4G,swap=2G;RAM>4G,<16G,swap=4G;RAM>16G,<64G,swap=8G;RAM>64G,<256G,swap=16G
+
+（Redhat6/7官方推荐）RAM<=2G,swap=2*RAM;RAM>2G,<8G,swap=RAM;RAM>8G,<64G,swap>=4G;RAM>=64G,swap>=4G;（休眠状态另外考虑）
+
+添加swap有两种方式：1、添加swap分区；2、添加swap文件；
+
+方法一、
+添加swap空间可用于解决系统物理内存占用过高，导致部分服务被强制关闭的问题
+
+在关机状态下，添加一块200M（0.2G）的硬盘
+
+查看swap大小
+
+free -m //或者 cat /proc/meminfo | grep -i swap 或者 fdisk -l 或者swap -s
+查看新添加的硬盘 这里新添加的磁盘是sdb（看容量可知）
+
+cat /proc/partitions
+创建分区 并设置为swap格式
+
+fdisk /dev/sdb
+n //创建分区 
+p //创建主分区 
+1 //创建分区1 
+两次回车 //起始扇区和Last扇区选择默认
+t //转换分区格式 
+82 //转换为swap空间 
+p //查看已创建的分区结果 
+w //保存退出
+格式化为swap空间
+
+mkswap /dev/sdb1
+启用swap
+
+swapon /dev/sdb1
+编辑配置文件 设为开机自动挂载
+
+vim /etc/fstab
+添加以下内容 保存并退出
+
+/dev/sdb1 swap swap defaults 0 0
+设置自动启用所有swap空间
+
+swapon -a
+重启验证
+
+reboot
+再次查看swap大小
+
+free -m //或者 cat /proc/meminfo | grep -i swap 或者 fdisk -l 或者swap -s
+注意：可以看出来swap已经发生变化了
+
+方法二、
+添加swap空间可用于解决系统物理内存不够，导致部分服务被强制关闭的问题
+
+查看swap大小
+
+free -m //或者 cat /proc/meminfo | grep -i swap 或者 fdisk -l 或者swap -s
+注意：如swap显示0，或者没有输出swap，则表示系统并没有增加swap空间
+
+创建swap文件
+
+fallocate -l 2G /etc/swap //指定文件为2G
+设置只允许root用户操作该文件
+
+chmod 600 /etc/swap
+检查文件大小与权限
+
+ls -lh /etc/swap
+设置该文件为swap文件
+
+mkswap /etc/swap
+启用swap文件
+
+swapon /etc/swap
+使swap文件永久生效
+
+vim /etc/fstab
+末尾添加：
+
+/etc/swap swap swap defaults 0 0
+更改swap配置
+
+vim /etc/sysctl.conf
+有则修改，无则添加：（按需修改数值）
+
+vm.swappiness=30 //值越大表示越倾向于使用swap空间
+重启生效
+
+reboot
+再次查看swap大小
+
+free -m //或者 cat /proc/meminfo | grep -i swap 或者 fdisk -l 或者swap -s

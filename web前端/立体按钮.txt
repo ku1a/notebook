@@ -1,0 +1,10 @@
+    background: url(http://www.tsdmw.net/xz/static/styleimg/alice/nv.png) repeat-x 0 0;
+	
+	用做好的图片实现立体
+	
+	    background: url(http://www.tsdmw.net/xz/static/styleimg/alice/nv_r.png) no-repeat 100% 0;
+		
+		
+    background: url(http://www.tsdmw.net/xz/static/styleimg/alice/nv_l_wide.png) no-repeat 0 0;
+	
+	两端两个顶层div

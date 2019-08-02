@@ -1,0 +1,12 @@
+1.按 【e】键
+
+2.按【↓】在 "LANG=zh_cn.UTF-8" 同行后面加上“init=/bin/sh”
+  然后按【Ctrl+X】进入“单用户模式”
+  
+3.输入【ls】,回车
+  再输入【mount空格–o空格remount空格,rw空格/ 】   //重新挂载
+  
+4.【passwd】
+
+5.输入【touch /.autorelabel】，回车
+  再输入【exec /sbin/init】回车

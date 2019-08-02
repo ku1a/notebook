@@ -1,0 +1,2 @@
+#cut -d: -f1 /etc/passwd   
+用冒号分割passwd 取出第一段

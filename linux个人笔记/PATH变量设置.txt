@@ -1,0 +1,4 @@
+# PATH ="${PATH}:路径"
+
+例:
+# PATH ="${PATH}:/root"

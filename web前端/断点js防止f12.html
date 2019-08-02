@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+123
+<script>
+    function checkDebugger(){
+        const d=new Date();
+        debugger;
+        const dur=Date.now()-d;
+        if(dur<5){
+            return false;
+        }else{
+            return true;
+        }
+    }
+    function breakDebugger(){
+        if(checkDebugger()){
+            breakDebugger();
+        }
+    }
+ 
+    document.body.onclick=function(){
+        breakDebugger();
+        alert(1);
+    };
+</script>
+<script>
+var __Ox18b42 = ["\x6E\x6F\x77", "\x62\x72\x65\x61\x6B\x44\x65\x62\x75\x67\x67\x65\x72\x28\x29", "\x73\x65\x74\x49\x6E\x74\x65\x72\x76\x61\x6C"];
+function checkDebugger() {
+    const _0xef1cx2 = new Date();
+    debugger ;const _0xef1cx3 = Date[__Ox18b42[0]]() - _0xef1cx2;
+    if (_0xef1cx3 < 50) {
+        return false
+    } else {
+        return true
+    }
+}
+function breakDebugger() {
+    if (checkDebugger()) {
+        breakDebugger()
+    }
+}
+</script>
+</body>
+</html>

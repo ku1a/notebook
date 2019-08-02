@@ -1,0 +1,10 @@
+# sync; sync; sync; reboot         //重启  sync 用于写入数据 需要在root权限进行
+
+# shutdown  1分钟后关机
+
+#systemctl  halt   系统停止
+			poweroff  直接关机
+			reboot    直接重启
+			
+# init 0    关机
+# init 6    重启

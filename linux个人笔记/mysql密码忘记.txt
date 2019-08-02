@@ -1,0 +1,3 @@
+方法一(先进入root权限)：
+# /etc/init.d/mysql stop
+# mysqld_safe --user=mysql --skip-grant-tables --skip-networking &

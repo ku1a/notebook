@@ -1,0 +1,22 @@
+yum groupinstall -y "X Window System"  # X Window System是执行在UNIX系统上的视窗系统，出现complete表示成功。据其它同行说此步骤不执行亦可。
+
+yum groupinstall -y "GNOME Desktop"  # 表示安装GNOME Desktop类型的桌面，出现complete表示成功；查阅其它经验贴发现也可以选择KDE Desktop，安装方法请参考其它资料。
+报错：
+
+Transaction check error:
+
+file /boot/efi/EFI/redhat from install of fwupdate-efi-12-5.el7.x86_64 conflicts with file from package grub2-common-1:2.02-0.65.el7_4.2.noarch
+
+file /boot/efi/EFI/redhat from install of fwupdate-efi-12-5.el7.x86_64 conflicts with file from package grub2-efi-1:2.02-0.65.el7_4.2.x86_64
+
+解决：表示包的版本有冲突，貌似是系统bug；执行yum update grub2-common、yum install grub2-efi、yum install fwupdate 后再重新执行yum groupinstall -y "GNOME Desktop"即可，参考链接：https://www.createdpro.com/a/100006。
+
+startx  # 表示进入桌面
+
+报错：
+
+xauth: file /root/.serverauth.2669 does not exist  # 这只是报错的其中一条，还有几条同类型报错，因当时不便截图故不能一 一列出。
+
+解决：在有网的情况下执行yum upgrade 该命令表示安装新内核，重启后即可正常进入桌面。参考链接：https://www.cnblogs.com/rgqancy/p/5554814.html。
+
+4.进入桌面后按提示输入一步步执行完成即可。注意事项：走到如下图这一步时只能以英文字母开头不能以数字开头，你输入全名时下一行的用户名会跟着自动输入，当用户名不跟着全名自动输入时说明系统不支持该类名称，但系统并不报错，只是等你到最后会发现一切就绪后桌面无图标并且鼠标右键无效无法操作；到输入密码这一步时，要求密码不能和名称有相同的字母或数字，否则无法进入下一步。
