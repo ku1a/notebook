@@ -1,0 +1,28 @@
+js和jquery设置css样式的几种方法
+一、js设置样式的方法
+
+1. 直接设置style的属性  某些情况用这个设置 !important值无效
+
+element.style.height = '50px';
+2. 直接设置属性（只能用于某些属性，相关样式会自动识别）
+
+  element.setAttribute('height',50);
+
+  element.setAttribute('height',50px');
+
+3. 设置style的属性
+
+element.setAttribute('style', 'height: 100px !important');
+4. 使用setProperty  如果要设置!important，推荐用这种方法设置第三个参数
+
+element.style.setProperty('height', '300px', 'important');
+5. 改变class   比如JQ的更改class相关方法
+
+因JS获取不到css的伪元素，所以可以通过改变伪元素父级的class来动态更改伪元素的样式
+
+element.className = 'blue';
+element.className += 'blue fb';
+6. 设置cssText
+
+element.style.cssText = 'height: 100px !important';
+element.style.cssText += 'height: 100px !important'；
