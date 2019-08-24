@@ -1,0 +1,12 @@
+var arr5 = [{id:10},{id:5},{id:6},{id:9},{id:2},{id:3}];
+		arr5.sort(function(a,b){
+			return a.id - b.id
+		})
+		console.log(arr5);
+		//输出新的排序
+		//		{id: 2}
+		//		{id: 3}
+		//		{id: 5}
+		//		{id: 6}
+		//		{id: 9}
+		//		{id: 10}
