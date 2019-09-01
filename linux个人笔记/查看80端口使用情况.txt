@@ -1,2 +1,2 @@
 lsof -i:80
-netstat
+netstat -ano
